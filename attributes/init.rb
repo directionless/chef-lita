@@ -1,19 +1,14 @@
 default['lita']['runit']['finish'] = false
 
-# Note that this is available for overriding in wrappers or roles/environments.
-# However by default, it will be set to:
-#
-# {
-#   'HOME' => node['lita']['install_dir'],
-#   'PATH' => [node['languages']['ruby']['bin_dir'],
-#              node['languages']['ruby']['gem_bin'],
-#              node['languages']['ruby']['ruby_dir']
-#              ].join(':')
-# }
-#
-# This is to avoid the derived attributes problem:
-#   https://christinemdraper.wordpress.com/2014/10/06/avoiding-the-possible-pitfalls-of-derived-attributes/
-#
-default['lita']['runit']['env'] = nil
+# Settings for runit's env file. Override, or update as needed.
+# Setting a value to nil, will cause it to be removed from hash passed to runit.
+# Set to "" to preserve the empty string.
+default['lita']['runit']['env']['HOME'] = node['lita']['install_dir']
+default['lita']['runit']['env']['LANG'] = 'en_US.UTF-8'
+default['lita']['runit']['env']['PATH'] = [
+  node['languages']['ruby']['bin_dir'],
+  node['languages']['ruby']['gem_bin'],
+  node['languages']['ruby']['ruby_dir'],
+].join(':')
 
 default['lita']['init_style'] = 'runit'

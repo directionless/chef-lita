@@ -34,18 +34,12 @@ when 'init'
 else
   include_recipe 'runit'
 
-  lita_runit_env_default = {
-    'HOME' => node['lita']['install_dir'],
-    'PATH' => [node['languages']['ruby']['bin_dir'],
-               node['languages']['ruby']['gem_bin'],
-               node['languages']['ruby']['ruby_dir']
-               ].join(':')
-  }
-  lita_runit_env = node['lita']['runit']['env'] || lita_runit_env_default
-
+  # Create a hash of environment variables for runit. Remove things
+  # that have a nil value. This easily lets people remove values in
+  # wrapper cookbooks.
   runit_service 'lita' do
     cookbook node["lita"]["config_cookbook"]
     finish node['lita']['runit']['finish']
-    env lita_runit_env
+    env node['lita']['runit']['env'].reject { |_, v| v.nil?}
   end
 end

@@ -85,6 +85,8 @@ suites:
             HOME: /tmp
             PATH: /opt/chef/embedded/bin:/opt/chef/embedded/bin/gem
             LITA: Just a fake value for testing
+            LITA1: 
+            LITA2: ''
         plugins:
           - google-images
           - pagerduty
